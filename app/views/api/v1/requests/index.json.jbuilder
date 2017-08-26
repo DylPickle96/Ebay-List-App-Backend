@@ -148,8 +148,9 @@ def parse_objects ()
       category:listing['primaryCategory'][0]['categoryName'][0],
       picture:listing['galleryURL'][0],
       location:listing['location'][0],
-      price:listing['sellingStatus'][0]['convertedCurrentPrice'][0]['__value__'][0],
-      startdate:listing['listingInfo'][0]['startTime'][0]
+      price:listing['sellingStatus'][0]['convertedCurrentPrice'][0]['__value__'],
+      startdate:listing['listingInfo'][0]['startTime'][0],
+      url:listing['viewItemURL'][0]
     }
     parsed_objects.push(object)
   end
@@ -166,4 +167,5 @@ json.array! ebay_objects do |ebay_object|
   json.location ebay_object[:location]
   json.price ebay_object[:price]
   json.startdate ebay_object[:startdate]
+  json.url ebay_object[:url]
 end
