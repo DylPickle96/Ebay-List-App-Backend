@@ -125,21 +125,17 @@ class ApplicationController < ActionController::API
       ten_words = get_ten_words(word_list)
       random_listings = []
 
-      start1 = Time.now
       ten_words.each do |word|
-        start = Time.now
         ebay_request = JSON.parse(open(
           "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-NAME=FindingService&SERVICE-VERSION=1.12.0&SECURITY-APPNAME=DylanSmi-TestApp-PRD-5b7edec1b-eaa1e0c6&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=#{word}&paginationInput.entriesPerPage=10&GLOBAL-ID=EBAY-ENCA&siteid=2"
         ).read)
-        finish = Time.now
-        puts finish - start
+
         random_listing_number = Random.rand(ebay_request['findItemsByKeywordsResponse'][0]['searchResult'][0]['item'].length)
         random_listing = ebay_request['findItemsByKeywordsResponse'][0]['searchResult'][0]['item'][random_listing_number]
 
         random_listings.push(random_listing)
       end
-      finish1 = Time.now
-      puts 'Method Time:',finish1 - start1
+
       return random_listings
     end
 
